@@ -35,8 +35,13 @@ minecraft {
     }
 }
 
+repositories {
+    maven { url = 'https://maven.dtrix.dev/artifactory/libs-release' }
+}
+
 dependencies {
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2854'
+    compile "fr.dynamx:DynamX:2.12.2:DEV"
 }
 
 jar {
@@ -54,3 +59,9 @@ jar {
 }
 
 jar.finalizedBy('reobfJar')
+
+sourceSets {
+    main {
+        output.resourcesDir = output.classesDir
+    }
+}
