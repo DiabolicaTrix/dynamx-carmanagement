@@ -1,14 +1,14 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "carmanagement",
+  "name": "Car Management Addon",
+  "description": "A DynamX addon to manage cars on servers with multiple players (keys, garage, unused clear).",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["DiabolicaTrix"],
+  "credits": "The DynamX team for their mod.",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
