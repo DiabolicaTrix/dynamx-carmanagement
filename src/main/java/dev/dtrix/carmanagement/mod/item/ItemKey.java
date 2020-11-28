@@ -10,8 +10,8 @@ public class ItemKey extends Item {
         setCreativeTab(CarManagementMod.TAB);
         setMaxStackSize(1);
         setNoRepair();
-        setRegistryName(CarManagementAddon.MODID, "car_key");
-        setUnlocalizedName("item_key");
+        setRegistryName(CarManagementAddon.MODID, "key");
+        setTranslationKey("key");
     }
 
 }
