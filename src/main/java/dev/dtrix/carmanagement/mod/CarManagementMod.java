@@ -19,7 +19,7 @@ public class CarManagementMod {
 
     public static final CreativeTabs TAB = new CreativeTabs("carmanagement_tab") {
         @Override
-        public ItemStack getTabIconItem() {
+        public ItemStack createIcon() {
             return new ItemStack(Items.KEY);
         }
     };
