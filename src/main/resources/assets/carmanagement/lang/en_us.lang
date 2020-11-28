@@ -1,1 +1,3 @@
-item.item_key.name=Car Key
+item.key.name=Car Key
+
+tile.garage.name=Garage
