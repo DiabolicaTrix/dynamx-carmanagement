@@ -37,11 +37,12 @@ minecraft {
 
 repositories {
     maven { url = 'https://maven.dtrix.dev/artifactory/libs-release' }
+    maven { url 'http://maven.dynamx.fr/artifactory/DynamXRepo' }
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2854'
-    compile "fr.dynamx:DynamX:2.12.2:DEV"
+    compile "fr.dynamx:DynamX:2.16.5"
 }
 
 jar {
