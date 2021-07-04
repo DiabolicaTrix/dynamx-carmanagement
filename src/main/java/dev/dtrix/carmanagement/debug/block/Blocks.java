@@ -14,12 +14,12 @@ public class Blocks {
 
     public static final Block GARAGE = new BlockGarage();
 
-
     @SubscribeEvent
     public static void onBlockRegister(RegistryEvent.Register<Block> event) {
         event.getRegistry().registerAll(GARAGE);
     }
 
+    @SubscribeEvent
     public static void onItemRegister(RegistryEvent.Register<Item> event) {
         event.getRegistry().registerAll(new ItemBlock(Blocks.GARAGE).setRegistryName(CarManagementAddon.MODID, "garage"));
     }

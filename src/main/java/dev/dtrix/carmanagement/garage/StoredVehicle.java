@@ -3,6 +3,11 @@ package dev.dtrix.carmanagement.garage;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
 
+/**
+ * This class is used to represent a vehicle that is currently in storage.
+ * The information contained should be enough to create the Entity in the world and to store the entity back in storage.
+ * @author DiabolicaTrix
+ */
 public class StoredVehicle implements INBTSerializable<NBTTagCompound> {
 
     private int id;

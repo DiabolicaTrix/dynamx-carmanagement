@@ -1,8 +1,30 @@
 #body {
-    background-color: gray;
+    background-color: #ffffff;
     border: #4b4b4b 1px;
 }
 
 #list {
-    background-color: black;
+    background-color: #d5d5d5;
+    border: red 1px;
+}
+
+.label text {
+    color: #ffffff;
+}
+
+.element {
+    color: black;
+}
+
+.button {
+    background-color: red;
+    color: #ffffff;
+}
+
+.button:hover {
+    background-color: #c20000;
+}
+
+#header {
+    background-color: red;
 }
