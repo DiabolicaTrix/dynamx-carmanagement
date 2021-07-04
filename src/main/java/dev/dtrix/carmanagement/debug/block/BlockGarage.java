@@ -1,8 +1,10 @@
-package dev.dtrix.carmanagement.mod.block;
+package dev.dtrix.carmanagement.debug.block;
 
 import dev.dtrix.carmanagement.CarManagementAddon;
+import dev.dtrix.carmanagement.garage.GarageManager;
 import dev.dtrix.carmanagement.mod.CarManagementMod;
 import dev.dtrix.carmanagement.mod.packets.PacketGarageGui;
+import fr.dynamx.common.contentpack.DynamXObjectLoaders;
 import fr.dynamx.common.entities.vehicles.CarEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -39,8 +41,7 @@ public class BlockGarage extends Block {
      */
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if(!worldIn.isRemote && hand == EnumHand.MAIN_HAND) {
-            List<Entity> entities = worldIn.getEntities(CarEntity.class, entity -> entity.getDistance(playerIn) <= 16.0D);
-            CarManagementMod.NETWORK.sendTo(new PacketGarageGui(entities.stream().map(Entity::getEntityId).collect(Collectors.toList())), (EntityPlayerMP) playerIn);
+            GarageManager.openGarageGui(playerIn);
             return true;
         }
         return false;

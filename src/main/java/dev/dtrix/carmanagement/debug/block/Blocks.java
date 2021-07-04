@@ -1,6 +1,6 @@
-package dev.dtrix.carmanagement.mod.block;
+package dev.dtrix.carmanagement.debug.block;
 
-import dev.dtrix.carmanagement.mod.block.BlockGarage;
+import dev.dtrix.carmanagement.debug.block.BlockGarage;
 import net.minecraft.block.Block;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
