@@ -43,9 +43,18 @@ repositories {
 dependencies {
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2854'
     compile "fr.dynamx:DynamX:2.16.5"
+    compile (group: 'net.voxelindustry', name: 'brokkgui-binding-mc1.12', version: '1.0.0-63-SNAPSHOT')
 }
 
 jar {
+    sourceSets {
+        main {
+            java {
+                exclude '**/debug/**'
+            }
+        }
+    }
+
     manifest {
         attributes([
             "Specification-Title": "carmanagement",
