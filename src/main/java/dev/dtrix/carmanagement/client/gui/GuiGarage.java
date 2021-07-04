@@ -1,89 +1,86 @@
 package dev.dtrix.carmanagement.client.gui;
 
+import com.google.common.collect.Lists;
+import com.jme3.math.Vector3f;
 import dev.dtrix.carmanagement.CarManagementAddon;
+import dev.dtrix.carmanagement.garage.StoredVehicle;
 import dev.dtrix.carmanagement.mod.CarManagementMod;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.client.renderer.Tessellator;
+import fr.aym.acsguis.component.layout.GuiScaler;
+import fr.aym.acsguis.component.panel.GuiFrame;
+import fr.aym.acsguis.component.panel.GuiPanel;
+import fr.dynamx.common.contentpack.DynamXObjectLoaders;
+import fr.dynamx.common.contentpack.loader.ModularVehicleInfoBuilder;
+import fr.dynamx.common.entities.vehicles.CarEntity;
+import fr.dynamx.common.handlers.DynamXGuiHandler;
+import fr.dynamx.utils.client.DynamXRenderUtils;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.client.GuiScrollingList;
+import net.voxelindustry.brokkgui.element.GuiListView;
+import net.voxelindustry.brokkgui.gui.BrokkGuiScreen;
+import net.voxelindustry.brokkgui.panel.GuiAbsolutePane;
+import net.voxelindustry.brokkgui.panel.GuiRelativePane;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-public class GuiGarage extends GuiScreen {
+public class GuiGarage extends BrokkGuiScreen {
 
-    public static final ResourceLocation TEXTURE = new ResourceLocation("textures/gui/demo_background.png");
-    public static final int WIDTH = 248;
-    public static final int HEIGHT = 166;
+    private Entity selectedEntity;
+    private long frame;
 
-    private CarList activeCars;
-    private List<Entity> entityList;
+    public GuiGarage(List<StoredVehicle> entities) {
+        super(0.5f, 0.5f, 300, 200);
 
-    public GuiGarage(List<Entity> entityList) {
-        this.setGuiSize(WIDTH, HEIGHT);
-        this.entityList = entityList;
+        this.addStylesheet("/assets/" + CarManagementAddon.MODID + "/css/garage.css");
+
+        final GuiRelativePane mainPanel = new GuiRelativePane();
+        this.setMainPanel(mainPanel);
+
+        GuiAbsolutePane body = new GuiAbsolutePane();
+        body.setSizeRatio(1, 1);
+        mainPanel.addChild(body);
+
+        body.setID("body");
+
+        GuiListView<StoredVehicle> listView = new GuiListView<>();
+        listView.setID("list");
+        listView.setSize(150, 190);
+        listView.setCellSize(140, 30);
+        listView.setElements(entities);
+        listView.setOnClickEvent(event -> {
+            /*this.selectedEntity = entities.get(listView.getSelectedCellIndex()-2);
+            System.out.println(listView.getSelectedCellIndex() - 2);
+            System.out.println((((CarEntity<?>) this.selectedEntity).getInfoName()));*/
+        });
+
+        body.addChild(listView, 5, 5);
     }
 
     @Override
-    public void initGui() {
-        super.initGui();
-        this.activeCars = new GuiGarage.CarList(this.mc);
-    }
+    public void renderLast(int mouseX, int mouseY) {
+        super.renderLast(mouseX, mouseY);
+        if(this.selectedEntity instanceof CarEntity) {
+            GlStateManager.pushMatrix();
 
-    @Override
-    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        int guiX = (width - WIDTH) / 2;
-        int guiY = (height - HEIGHT) / 2;
+            GlStateManager.enableRescaleNormal();
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.drawDefaultBackground();
+            GlStateManager.translate(200, 100, 0);
+            GlStateManager.scale(50, 50, 50);
+            GlStateManager.rotate(180, 0, 0, 1);
+            GlStateManager.rotate(90, 0, 1, 0);
 
-        this.mc.getTextureManager().bindTexture(TEXTURE);
-        this.drawTexturedModalRect(guiX, guiY, 0, 0, WIDTH, HEIGHT);
+            //DynamXRenderUtils.renderCar(DynamXObjectLoaders.WHEELED_VEHICLES.findInfo(((CarEntity) selectedEntity).getInfoName()), (byte) frame);
 
-        GuiHelper.renderCar(guiX, guiY, 5, this.entityList.get(0));
-        //this.activeCars.drawScreen(mouseX, mouseY, partialTicks);
-        super.drawScreen(mouseX, mouseY, partialTicks);
-    }
+            GlStateManager.disableRescaleNormal();
+            GlStateManager.disableLighting();
+            GlStateManager.popMatrix();
 
-    class CarList extends GuiScrollingList
-    {
-        public CarList(Minecraft client) {
-            super(client, 120, GuiGarage.this.height, (GuiGarage.this.height - HEIGHT) / 2 + 12, (GuiGarage.this.height - HEIGHT) / 2 + HEIGHT - 20 - 10 - 2, (GuiGarage.this.width - WIDTH) / 2 + 10, 28, GuiGarage.this.width, GuiGarage.this.height);
-            this.selectedIndex = 0;
-        }
-
-        @Override
-        protected int getSize() {
-            return 0;
-        }
-
-        @Override
-        protected void elementClicked(int index, boolean doubleClick) {
-
-        }
-
-        @Override
-        protected boolean isSelected(int index) {
-            return false;
-        }
-
-        @Override
-        protected void drawBackground() {
-        }
-
-        @Override
-        protected int getContentHeight()
-        {
-            return (this.getSize()) * this.slotHeight + 1;
-        }
-
-        @Override
-        protected void drawSlot(int slotIdx, int entryRight, int slotTop, int slotBuffer, Tessellator tess) {
-            //GuiCarnet.this.drawString(GuiCarnet.this.fontRenderer, I18n.format("lyra.fine." + this.fineList.get(slotIdx).toLowerCase()), this.left + 3, slotTop + 2, 16777215);
-            //GuiCarnet.this.drawString(GuiCarnet.this.fontRenderer,  I18n.format("lyra.fine.price",fineMap.get(this.fineList.get(slotIdx))), this.left + 3, slotTop + 2 + GuiCarnet.this.fontRenderer.FONT_HEIGHT + 2, 16777215);
+            frame++;
         }
     }
-
 }
