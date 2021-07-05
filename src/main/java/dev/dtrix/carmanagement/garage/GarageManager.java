@@ -1,11 +1,21 @@
 package dev.dtrix.carmanagement.garage;
 
 import dev.dtrix.carmanagement.CarManagementAddon;
+import dev.dtrix.carmanagement.keys.CarManagementModule;
 import dev.dtrix.carmanagement.mod.CarManagementMod;
+import dev.dtrix.carmanagement.mod.item.ItemKey;
 import dev.dtrix.carmanagement.mod.packets.PacketGarageGui;
+import fr.dynamx.addons.basics.common.KeyUtils;
+import fr.dynamx.common.entities.BaseVehicleEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import org.slf4j.event.Level;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class GarageManager {
 
@@ -26,6 +36,30 @@ public class GarageManager {
 
     public static void openGarageGui(EntityPlayer player) {
         CarManagementMod.NETWORK.sendTo(new PacketGarageGui(getStorage().list(player)), (EntityPlayerMP) player);
+    }
+
+    public static void storeNearestVehicle(EntityPlayer player, BlockPos position) {
+        List<BaseVehicleEntity> vehicles = player.world.getEntities(BaseVehicleEntity.class, vehicle -> {
+            CarManagementModule module = (CarManagementModule) vehicle.getModuleByType(CarManagementModule.class);
+            System.out.println(module.getOwner());
+            return vehicle.getDistanceSq(position) <= 16.0D && module.getOwner().compareTo(player.getPersistentID()) == 0;
+        }).stream().sorted(Comparator.comparingDouble(vehicle -> vehicle.getDistanceSq(position))).collect(Collectors.toList());
+        if(vehicles.size() > 0) {
+            if(getStorage().store(player, vehicles.get(0))) {
+                player.world.removeEntity(vehicles.get(0));
+                for(int i = 0; i < player.inventory.getSizeInventory(); i++) {
+                    ItemStack stack = player.inventory.getStackInSlot(i);
+                    if(stack.getItem() instanceof ItemKey
+                            && KeyUtils.hasLinkedVehicle(stack)
+                            && KeyUtils.getLinkedVehicle(stack).compareTo(vehicles.get(0).getUniqueID()) == 0) {
+                        player.inventory.removeStackFromSlot(i);
+                    }
+                }
+                player.sendMessage(new TextComponentTranslation("carmanagement.store.success", vehicles.get(0).getDisplayName()));
+                return;
+            }
+        }
+        player.sendMessage(new TextComponentTranslation("carmanagement.store.error"));
     }
 
 }

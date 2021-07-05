@@ -4,6 +4,7 @@ import com.jme3.math.Vector3f;
 import dev.dtrix.carmanagement.client.gui.GuiGarage;
 import dev.dtrix.carmanagement.garage.GarageManager;
 import dev.dtrix.carmanagement.garage.StoredVehicle;
+import dev.dtrix.carmanagement.keys.CarManagementModule;
 import dev.dtrix.carmanagement.mod.item.Items;
 import fr.dynamx.addons.basics.common.KeyUtils;
 import fr.dynamx.common.entities.vehicles.CarEntity;
@@ -16,10 +17,12 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.voxelindustry.brokkgui.wrapper.impl.BrokkGuiManager;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class PacketRetrieveVehicle implements IMessage {
+
+    //WORKAROUND
+    public static final Map<UUID, UUID> ownershipMap = new HashMap<>();
 
     public StoredVehicle vehicle;
 
@@ -52,6 +55,8 @@ public class PacketRetrieveVehicle implements IMessage {
                     ItemStack key = new ItemStack(Items.KEY);
                     KeyUtils.setLinkedVehicle(key, vehicle.getUniqueID());
                     ctx.getServerHandler().player.addItemStackToInventory(key);
+
+                    ownershipMap.put(vehicle.getUniqueID(), ctx.getServerHandler().player.getPersistentID());
                 }
             });
             return null;
