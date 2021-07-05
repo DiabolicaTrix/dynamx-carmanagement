@@ -1,0 +1,5 @@
+item.key.name=Clé de voiture
+tile.garage.name=Garage
+
+carmanagement.store.success=Votre %1 a bien été stocké dans votre garage.
+carmanagement.store.error=Aucun véhicule trouvé.
