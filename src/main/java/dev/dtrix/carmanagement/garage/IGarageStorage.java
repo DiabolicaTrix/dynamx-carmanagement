@@ -1,6 +1,6 @@
 package dev.dtrix.carmanagement.garage;
 
-import fr.dynamx.common.entities.vehicles.CarEntity;
+import fr.dynamx.common.entities.BaseVehicleEntity;
 import net.minecraft.entity.player.EntityPlayer;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public interface IGarageStorage {
      * @param vehicle Instance of the active vehicle to be stored.
      * @return a state boolean. True if successful, false otherwise.
      */
-    boolean store(EntityPlayer player, CarEntity<?> vehicle);
+    boolean store(EntityPlayer player, BaseVehicleEntity<?> vehicle);
 
     /**
      * Used to retrieve a vehicle from a player's garage.
