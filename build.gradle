@@ -6,14 +6,18 @@ buildscript {
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
-        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:latest.release"
     }
 }
-        
+
+plugins {
+    id "com.jfrog.artifactory" version "4.9.8"
+}
+
 apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'maven-publish'
 apply plugin: "com.jfrog.artifactory"
 
-version = '0.1'
+version = '0.1.0'
 group = 'dev.dtrix'
 archivesBaseName = 'carmanagement'
 
@@ -50,13 +54,7 @@ dependencies {
 }
 
 jar {
-    /*sourceSets {
-        main {
-            java {
-                exclude '**//**'
-            }
-        }
-    }*/
+    exclude('dev/dtrix/carmanagement/debug/**')
 
     manifest {
         attributes([
@@ -76,5 +74,30 @@ jar.finalizedBy('reobfJar')
 sourceSets {
     main {
         output.resourcesDir = output.classesDir
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+        }
+    }
+}
+
+artifactoryPublish.dependsOn build
+
+artifactory {
+    contextUrl = "${artifactory_contextUrl}"
+    publish {
+        repository {
+            repoKey = 'diabolicatrix'
+            username = "${artifactory_user}"
+            password = "${artifactory_password}"
+            maven = true
+        }
+        defaults {
+            publications('mavenJava')
+        }
     }
 }
