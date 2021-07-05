@@ -41,12 +41,13 @@ public class GarageManager {
     public static void storeNearestVehicle(EntityPlayer player, BlockPos position) {
         List<BaseVehicleEntity> vehicles = player.world.getEntities(BaseVehicleEntity.class, vehicle -> {
             CarManagementModule module = (CarManagementModule) vehicle.getModuleByType(CarManagementModule.class);
-            System.out.println(module.getOwner());
-            return vehicle.getDistanceSq(position) <= 16.0D && module.getOwner().compareTo(player.getPersistentID()) == 0;
+            return vehicle.getDistanceSq(position) <= 16.0D && module.getStoredVehicle().getOwner().compareTo(player.getPersistentID()) == 0;
         }).stream().sorted(Comparator.comparingDouble(vehicle -> vehicle.getDistanceSq(position))).collect(Collectors.toList());
         if(vehicles.size() > 0) {
-            if(getStorage().store(player, vehicles.get(0))) {
-                player.world.removeEntity(vehicles.get(0));
+            BaseVehicleEntity<?> entity = vehicles.get(0);
+            CarManagementModule module = (CarManagementModule) entity.getModuleByType(CarManagementModule.class);
+            if(getStorage().store(player, module.getStoredVehicle())) {
+                player.world.removeEntity(entity);
                 for(int i = 0; i < player.inventory.getSizeInventory(); i++) {
                     ItemStack stack = player.inventory.getStackInSlot(i);
                     if(stack.getItem() instanceof ItemKey
