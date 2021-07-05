@@ -1,16 +1,9 @@
 package dev.dtrix.carmanagement.keys;
 
-import dev.dtrix.carmanagement.mod.item.ItemKey;
 import dev.dtrix.carmanagement.mod.packets.PacketRetrieveVehicle;
-import fr.dynamx.addons.basics.common.BasicsAddonModule;
-import fr.dynamx.addons.basics.common.KeyUtils;
-import fr.dynamx.addons.basics.common.info.BasicsAddonInfos;
 import fr.dynamx.api.events.PhysicsEntityEvent;
 import fr.dynamx.api.events.VehicleEntityEvent;
-import fr.dynamx.common.contentpack.ModularVehicleInfo;
 import fr.dynamx.common.entities.BaseVehicleEntity;
-import fr.dynamx.common.items.DynamXItem;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -22,8 +15,8 @@ public class KeyInteractionHandler {
     {
         BaseVehicleEntity<?> entity = event.getEntity();
         event.addModule(new CarManagementModule(entity));
-        if(PacketRetrieveVehicle.ownershipMap.containsKey(entity.getUniqueID())) {
-            entity.getModuleByType(CarManagementModule.class).setOwner(PacketRetrieveVehicle.ownershipMap.remove(entity.getUniqueID()));
+        if(PacketRetrieveVehicle.vehicleMap.containsKey(entity.getUniqueID())) {
+            entity.getModuleByType(CarManagementModule.class).setStoredVehicle(PacketRetrieveVehicle.vehicleMap.remove(entity.getUniqueID()));
         }
     }
 

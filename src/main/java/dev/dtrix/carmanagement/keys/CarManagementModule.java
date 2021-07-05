@@ -1,5 +1,6 @@
 package dev.dtrix.carmanagement.keys;
 
+import dev.dtrix.carmanagement.garage.StoredVehicle;
 import fr.dynamx.api.entities.modules.IPhysicsModule;
 import fr.dynamx.common.entities.BaseVehicleEntity;
 import fr.dynamx.common.physics.entities.AbstractEntityPhysicsHandler;
@@ -10,8 +11,8 @@ import java.util.UUID;
 public class CarManagementModule implements IPhysicsModule<AbstractEntityPhysicsHandler<?, ?>> {
 
     private BaseVehicleEntity<?> vehicleEntity;
+    private StoredVehicle storedVehicle;
     private boolean locked;
-    private UUID owner = UUID.randomUUID();
 
     public CarManagementModule(BaseVehicleEntity<?> vehicleEntity) {
         this.vehicleEntity = vehicleEntity;
@@ -25,18 +26,18 @@ public class CarManagementModule implements IPhysicsModule<AbstractEntityPhysics
         this.locked = locked;
     }
 
-    public UUID getOwner() {
-        return owner;
+    public StoredVehicle getStoredVehicle() {
+        return storedVehicle;
     }
 
-    public void setOwner(UUID owner) {
-        this.owner = owner;
+    public void setStoredVehicle(StoredVehicle storedVehicle) {
+        this.storedVehicle = storedVehicle;
     }
 
     @Override
     public void writeToNBT(NBTTagCompound tag) {
         tag.setBoolean("locked", this.locked);
-        tag.setUniqueId("owner", this.owner);
+        tag.setTag("stored_vehicle", this.storedVehicle.serializeNBT());
         IPhysicsModule.super.writeToNBT(tag);
     }
 
@@ -44,6 +45,8 @@ public class CarManagementModule implements IPhysicsModule<AbstractEntityPhysics
     public void readFromNBT(NBTTagCompound tag) {
         IPhysicsModule.super.readFromNBT(tag);
         this.locked = tag.getBoolean("locked");
-        this.owner = tag.getUniqueId("owner");
+        StoredVehicle vehicle = new StoredVehicle();
+        vehicle.deserializeNBT(tag.getCompoundTag("stored_vehicle"));
+        this.storedVehicle = vehicle;
     }
 }

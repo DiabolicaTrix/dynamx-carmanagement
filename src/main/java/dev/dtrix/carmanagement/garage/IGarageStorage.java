@@ -25,7 +25,7 @@ public interface IGarageStorage {
      * @param vehicle Instance of the active vehicle to be stored.
      * @return a state boolean. True if successful, false otherwise.
      */
-    boolean store(EntityPlayer player, BaseVehicleEntity<?> vehicle);
+    boolean store(EntityPlayer player, StoredVehicle vehicle);
 
     /**
      * Used to retrieve a vehicle from a player's garage.

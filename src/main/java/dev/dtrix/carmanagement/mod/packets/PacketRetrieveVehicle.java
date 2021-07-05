@@ -1,28 +1,24 @@
 package dev.dtrix.carmanagement.mod.packets;
 
 import com.jme3.math.Vector3f;
-import dev.dtrix.carmanagement.client.gui.GuiGarage;
 import dev.dtrix.carmanagement.garage.GarageManager;
 import dev.dtrix.carmanagement.garage.StoredVehicle;
-import dev.dtrix.carmanagement.keys.CarManagementModule;
 import dev.dtrix.carmanagement.mod.item.Items;
 import fr.dynamx.addons.basics.common.KeyUtils;
 import fr.dynamx.common.entities.vehicles.CarEntity;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.voxelindustry.brokkgui.wrapper.impl.BrokkGuiManager;
 
 import java.util.*;
 
 public class PacketRetrieveVehicle implements IMessage {
 
     //WORKAROUND
-    public static final Map<UUID, UUID> ownershipMap = new HashMap<>();
+    public static final Map<UUID, StoredVehicle> vehicleMap = new HashMap<>();
 
     public StoredVehicle vehicle;
 
@@ -56,7 +52,7 @@ public class PacketRetrieveVehicle implements IMessage {
                     KeyUtils.setLinkedVehicle(key, vehicle.getUniqueID());
                     ctx.getServerHandler().player.addItemStackToInventory(key);
 
-                    ownershipMap.put(vehicle.getUniqueID(), ctx.getServerHandler().player.getPersistentID());
+                    vehicleMap.put(vehicle.getUniqueID(), message.vehicle);
                 }
             });
             return null;
