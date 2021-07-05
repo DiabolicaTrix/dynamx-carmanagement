@@ -4,9 +4,12 @@ import com.jme3.math.Vector3f;
 import dev.dtrix.carmanagement.client.gui.GuiGarage;
 import dev.dtrix.carmanagement.garage.GarageManager;
 import dev.dtrix.carmanagement.garage.StoredVehicle;
+import dev.dtrix.carmanagement.mod.item.Items;
+import fr.dynamx.addons.basics.common.KeyUtils;
 import fr.dynamx.common.entities.vehicles.CarEntity;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -43,9 +46,12 @@ public class PacketRetrieveVehicle implements IMessage {
         public IMessage onMessage(PacketRetrieveVehicle message, MessageContext ctx) {
             ctx.getServerHandler().player.getServerWorld().addScheduledTask(() -> {
                 if(GarageManager.getStorage().retrieve(ctx.getServerHandler().player, message.vehicle)) {
-                    System.out.println("spawning vehicle...");
                     CarEntity vehicle = new CarEntity(message.vehicle.getName(), ctx.getServerHandler().player.world, new Vector3f(((float) ctx.getServerHandler().player.posX), ((float) (ctx.getServerHandler().player.posY + 10)), ((float) ctx.getServerHandler().player.posZ)), 0, message.vehicle.getMetadata());
                     ctx.getServerHandler().player.world.spawnEntity(vehicle);
+
+                    ItemStack key = new ItemStack(Items.KEY);
+                    KeyUtils.setLinkedVehicle(key, vehicle.getUniqueID());
+                    ctx.getServerHandler().player.addItemStackToInventory(key);
                 }
             });
             return null;
