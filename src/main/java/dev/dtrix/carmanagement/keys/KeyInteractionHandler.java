@@ -1,6 +1,7 @@
 package dev.dtrix.carmanagement.keys;
 
 import dev.dtrix.carmanagement.mod.item.ItemKey;
+import dev.dtrix.carmanagement.mod.packets.PacketRetrieveVehicle;
 import fr.dynamx.addons.basics.common.BasicsAddonModule;
 import fr.dynamx.addons.basics.common.KeyUtils;
 import fr.dynamx.addons.basics.common.info.BasicsAddonInfos;
@@ -21,6 +22,9 @@ public class KeyInteractionHandler {
     {
         BaseVehicleEntity<?> entity = event.getEntity();
         event.addModule(new CarManagementModule(entity));
+        if(PacketRetrieveVehicle.ownershipMap.containsKey(entity.getUniqueID())) {
+            entity.getModuleByType(CarManagementModule.class).setOwner(PacketRetrieveVehicle.ownershipMap.remove(entity.getUniqueID()));
+        }
     }
 
     @SubscribeEvent
@@ -28,14 +32,6 @@ public class KeyInteractionHandler {
         CarManagementModule module = event.getEntity().getModuleByType(CarManagementModule.class);
         if(module.isLocked())
             event.setCanceled(true);
-    }
-
-    @SubscribeEvent
-    public static void onRightClick(PlayerInteractEvent.RightClickItem event) {
-        if(event.getItemStack().getItem() instanceof DynamXItem) {
-            DynamXItem item = (DynamXItem) event.getItemStack().getItem();
-            System.out.println(item.getInfo().getFullName());
-        }
     }
 
 
