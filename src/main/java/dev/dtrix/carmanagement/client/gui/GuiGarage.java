@@ -5,6 +5,7 @@ import dev.dtrix.carmanagement.CarManagementAddon;
 import dev.dtrix.carmanagement.garage.StoredVehicle;
 import dev.dtrix.carmanagement.mod.CarManagementMod;
 import dev.dtrix.carmanagement.mod.packets.PacketRetrieveVehicle;
+import fr.aym.acsguis.component.textarea.GuiTextArea;
 import fr.dynamx.common.contentpack.DynamXObjectLoaders;
 import fr.dynamx.common.contentpack.ModularVehicleInfo;
 import fr.dynamx.common.entities.vehicles.CarEntity;
@@ -28,9 +29,13 @@ import java.util.List;
 public class GuiGarage extends BrokkGuiScreen {
 
     private ModularVehicleInfo<?> selectedInfo;
-    private CarEntity selectedEntity;
     private StoredVehicle selected;
+
     private long frame;
+
+    public final GuiListView<StoredVehicle> listView;
+    public final GuiButton retrieveButton;
+    public final GuiLabel infoText;
 
     public GuiGarage(List<StoredVehicle> entities) {
         super(0.5f, 0.5f, 300, 200);
@@ -57,16 +62,11 @@ public class GuiGarage extends BrokkGuiScreen {
         title.addStyleClass("label");
         body.addChild(title, 0, 0);
 
-        GuiLabel mass = new GuiLabel();
-        body.addChild(mass, 150, 80);
+        infoText = new GuiLabel();
+        infoText.setSize(150, 100);
+        body.addChild(infoText, 150, 80);
 
-        GuiLabel maxSpeed = new GuiLabel();
-        body.addChild(maxSpeed, 150, 90);
-
-        GuiLabel variant = new GuiLabel();
-        body.addChild(variant, 150, 100);
-
-        GuiListView<StoredVehicle> listView = new GuiListView<>();
+        listView = new GuiListView<>();
         listView.setID("list");
         listView.setSize(140, 180);
         listView.setCellSize(140, 15);
@@ -90,20 +90,15 @@ public class GuiGarage extends BrokkGuiScreen {
         });
         listView.setElements(entities);
         listView.setOnClickEvent(event -> {
+            //selectElement(listView.getSelectedCellIndex()-2);
             this.selected = entities.get(listView.getSelectedCellIndex()-2);
-            System.out.println("selecting: " + this.selected);
             ModularVehicleInfo<?> info = DynamXObjectLoaders.WHEELED_VEHICLES.findInfo(this.selected.getName());
-            System.out.println("Mass: " + info.getEmptyMass());
-            System.out.println("Max speed: " + info.getVehicleMaxSpeed());
-            mass.setText("Mass: " + info.getEmptyMass());
-            maxSpeed.setText("Max speed: " + info.getVehicleMaxSpeed());
-            variant.setText("Variant: " + info.getTextures().get((byte) this.selected.getId()).getName());
-            this.selectedEntity = new CarEntity(info.getFullName(), Minecraft.getMinecraft().world, new Vector3f(0, 0, 0), 0, this.selected.getMetadata());
+            displaySelectedElement(info);
             this.selectedInfo = info;
         });
         body.addChild(listView, 5, 16);
 
-        GuiButton retrieveButton = new GuiButton("Retrieve");
+        retrieveButton = new GuiButton("Retrieve");
         retrieveButton.addStyleClass("button");
         retrieveButton.setSize(145, 20);
         retrieveButton.setOnClickEvent(event -> {
@@ -132,4 +127,11 @@ public class GuiGarage extends BrokkGuiScreen {
             GlStateManager.popMatrix();
         }
     }
+
+    public void displaySelectedElement(ModularVehicleInfo<?> info) {
+        infoText.setText("Mass: " + info.getEmptyMass() + "\n"
+                + "Max speed: " + info.getVehicleMaxSpeed() + "\n"
+                + "Variant: " + info.getTextures().get((byte) this.selected.getId()).getName());
+    }
+
 }
