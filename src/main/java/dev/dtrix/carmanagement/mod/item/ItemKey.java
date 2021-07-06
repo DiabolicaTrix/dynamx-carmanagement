@@ -15,6 +15,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Mouse;
 
 import java.util.Arrays;
@@ -68,6 +70,7 @@ public class ItemKey extends Item {
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         if(worldIn.isRemote) {
             Minecraft.getMinecraft().displayGuiScreen(new InteractionMenu(KEY_INTERACTION, () -> !Mouse.isButtonDown(1)));
