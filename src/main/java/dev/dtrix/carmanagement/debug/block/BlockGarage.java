@@ -1,6 +1,7 @@
 package dev.dtrix.carmanagement.debug.block;
 
 import dev.dtrix.carmanagement.CarManagementAddon;
+import dev.dtrix.carmanagement.garage.GarageHelper;
 import dev.dtrix.carmanagement.garage.GarageManager;
 import dev.dtrix.carmanagement.mod.CarManagementMod;
 import dev.dtrix.carmanagement.mod.packets.PacketGarageGui;
@@ -41,7 +42,11 @@ public class BlockGarage extends Block {
      */
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if(!worldIn.isRemote && hand == EnumHand.MAIN_HAND) {
-            GarageManager.openGarageGui(playerIn);
+            if(playerIn.isSneaking()) {
+                GarageHelper.storeNearestVehicle(playerIn, pos);
+                return true;
+            }
+            GarageHelper.openGarageGui(playerIn);
             return true;
         }
         return false;
