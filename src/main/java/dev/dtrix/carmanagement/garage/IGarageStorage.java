@@ -36,4 +36,12 @@ public interface IGarageStorage {
      */
     boolean retrieve(EntityPlayer player, StoredVehicle vehicle);
 
+    /**
+     * Used to insert a new vehicle in storage. This is typically used when buying a new vehicle.
+     * @param player The owner of the vehicle.
+     * @param vehicle The vehicle to be added.
+     * @return a state boolean. True if successful, false otherwise.
+     */
+    boolean insert(EntityPlayer player, StoredVehicle vehicle);
+
 }

@@ -1,5 +1,6 @@
 package dev.dtrix.carmanagement.garage;
 
+import fr.dynamx.common.entities.BaseVehicleEntity;
 import fr.dynamx.common.entities.vehicles.CarEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import scala.actors.threadpool.Arrays;
@@ -17,13 +18,11 @@ public class DummyStorage implements IGarageStorage{
 
     @Override
     public List<StoredVehicle> list(EntityPlayer player) {
-        List<StoredVehicle> test = new ArrayList<>();
-        test.add(new StoredVehicle(0, "DartcherPack.vehicle_trophy_truck", 0));
-        return test;
+        return new ArrayList<>();
     }
 
     @Override
-    public boolean store(EntityPlayer player, CarEntity<?> vehicle) {
+    public boolean store(EntityPlayer player, StoredVehicle vehicle) {
         return false;
     }
 
@@ -31,4 +30,7 @@ public class DummyStorage implements IGarageStorage{
     public boolean retrieve(EntityPlayer player, StoredVehicle vehicle) {
         return false;
     }
+
+    @Override
+    public boolean insert(EntityPlayer player, StoredVehicle vehicle) { return false; }
 }
