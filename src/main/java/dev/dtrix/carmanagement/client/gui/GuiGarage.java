@@ -31,11 +31,12 @@ public class GuiGarage extends BrokkGuiScreen {
     private ModularVehicleInfo<?> selectedInfo;
     private StoredVehicle selected;
 
-    private long frame;
+    private GuiLabel mass;
+    private GuiLabel speed;
+    private GuiLabel variant;
 
     public final GuiListView<StoredVehicle> listView;
     public final GuiButton retrieveButton;
-    public final GuiLabel infoText;
 
     public GuiGarage(List<StoredVehicle> entities) {
         super(0.5f, 0.5f, 300, 200);
@@ -62,9 +63,7 @@ public class GuiGarage extends BrokkGuiScreen {
         title.addStyleClass("label");
         body.addChild(title, 0, 0);
 
-        infoText = new GuiLabel();
-        infoText.setSize(150, 100);
-        body.addChild(infoText, 150, 80);
+        setupInformationPanel(body);
 
         listView = new GuiListView<>();
         listView.setID("list");
@@ -93,7 +92,7 @@ public class GuiGarage extends BrokkGuiScreen {
             //selectElement(listView.getSelectedCellIndex()-2);
             this.selected = entities.get(listView.getSelectedCellIndex()-2);
             ModularVehicleInfo<?> info = DynamXObjectLoaders.WHEELED_VEHICLES.findInfo(this.selected.getName());
-            displaySelectedElement(info);
+            updateInformationPanel(info);
             this.selectedInfo = info;
         });
         body.addChild(listView, 5, 16);
@@ -128,10 +127,21 @@ public class GuiGarage extends BrokkGuiScreen {
         }
     }
 
-    public void displaySelectedElement(ModularVehicleInfo<?> info) {
-        infoText.setText("Mass: " + info.getEmptyMass() + "\n"
-                + "Max speed: " + info.getVehicleMaxSpeed() + "\n"
-                + "Variant: " + info.getTextures().get((byte) this.selected.getId()).getName());
+    public void setupInformationPanel(GuiAbsolutePane body) {
+        mass = new GuiLabel();
+        body.addChild(mass, 150, 80);
+
+        speed = new GuiLabel();
+        body.addChild(speed, 150, 90);
+
+        variant = new GuiLabel();
+        body.addChild(variant, 150, 100);
+    }
+
+    public void updateInformationPanel(ModularVehicleInfo<?> info) {
+        mass.setText("Mass: " + info.getEmptyMass());
+        speed.setText("Max speed: " + info.getVehicleMaxSpeed());
+        variant.setText("Variant: " + info.getTextures().get((byte) this.selected.getId()).getName());
     }
 
 }
