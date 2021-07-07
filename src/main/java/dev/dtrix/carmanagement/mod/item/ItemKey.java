@@ -37,7 +37,7 @@ public class ItemKey extends Item {
 
         @Override
         public ResourceLocation getIcon() {
-            return new ResourceLocation(CarManagementAddon.MODID, "test");
+            return new ResourceLocation(CarManagementAddon.MODID, "textures/icons/unlock.png");
         }
     }, new IInteractionAction() {
         @Override
@@ -52,7 +52,7 @@ public class ItemKey extends Item {
 
         @Override
         public ResourceLocation getIcon() {
-            return new ResourceLocation(CarManagementAddon.MODID, "test");
+            return new ResourceLocation(CarManagementAddon.MODID, "textures/icons/lock.png");
         }
     });
 

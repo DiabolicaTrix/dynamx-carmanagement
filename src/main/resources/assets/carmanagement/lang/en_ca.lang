@@ -3,3 +3,6 @@ tile.garage.name=Garage
 
 carmanagement.store.success=Your %1 has successfully been stored in your garage.
 carmanagement.store.error=No vehicles found.
+
+carmanagement.lock=The vehicle has been locked.
+carmanagement.lock=The vehicle has been unlocked.

@@ -141,7 +141,7 @@ public class GuiGarage extends BrokkGuiScreen {
     public void updateInformationPanel(ModularVehicleInfo<?> info) {
         mass.setText("Mass: " + info.getEmptyMass());
         speed.setText("Max speed: " + info.getVehicleMaxSpeed());
-        variant.setText("Variant: " + info.getTextures().get((byte) this.selected.getId()).getName());
+        variant.setText("Variant: " + info.getTextures().get((byte) this.selected.getMetadata()).getName());
     }
 
 }
