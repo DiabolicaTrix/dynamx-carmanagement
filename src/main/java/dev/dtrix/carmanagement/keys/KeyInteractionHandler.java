@@ -27,5 +27,24 @@ public class KeyInteractionHandler {
             event.setCanceled(true);
     }
 
+    /**
+     * Disables manual spawning of vehicles. This forces the use of the garage system.
+     */
+    @SubscribeEvent
+    public static void onPhysicsEntitySpawned(PhysicsEntityEvent.PhysicsEntitySpawnedEvent event) {
+        if(event.getEntity() instanceof BaseVehicleEntity && event.getEntity().getModuleByType(CarManagementModule.class).getStoredVehicle() == null) {
+            event.setCanceled(true);
+        }
+    }
+
+    /**
+     * Disables the manual removal of vehicles by hitting them. This forces the use of the garage system.
+     * TODO check for permission and set inactive on destroy.
+     */
+    @SubscribeEvent
+    public static void onAttacked(PhysicsEntityEvent.AttackedEvent event) {
+        event.setCanceled(true);
+    }
+
 
 }
