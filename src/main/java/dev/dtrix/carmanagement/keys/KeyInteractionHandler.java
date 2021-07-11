@@ -4,8 +4,12 @@ import dev.dtrix.carmanagement.mod.packets.PacketRetrieveVehicle;
 import fr.dynamx.api.events.PhysicsEntityEvent;
 import fr.dynamx.api.events.VehicleEntityEvent;
 import fr.dynamx.common.entities.BaseVehicleEntity;
+import fr.dynamx.common.items.tools.ItemWrench;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.EnumHand;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.server.permission.PermissionAPI;
 
 @Mod.EventBusSubscriber
 public class KeyInteractionHandler {
@@ -39,10 +43,14 @@ public class KeyInteractionHandler {
 
     /**
      * Disables the manual removal of vehicles by hitting them. This forces the use of the garage system.
-     * TODO check for permission and set inactive on destroy.
+     * TODO set inactive on destroy.
      */
     @SubscribeEvent
     public static void onAttacked(PhysicsEntityEvent.AttackedEvent event) {
+        System.out.println(PermissionAPI.hasPermission(event.player, "carmanagement.destroy"));
+        if(!event.player.world.isRemote && event.player.isSneaking() && PermissionAPI.hasPermission(event.player, "carmanagement.destroy")) {
+            return;
+        }
         event.setCanceled(true);
     }
 

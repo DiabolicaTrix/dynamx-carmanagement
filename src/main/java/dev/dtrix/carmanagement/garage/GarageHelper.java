@@ -46,8 +46,10 @@ public class GarageHelper {
                 player.sendMessage(new TextComponentTranslation("carmanagement.store.success", vehicles.get(0).getDisplayName()));
                 return;
             }
+            player.sendMessage(new TextComponentTranslation("carmanagement.store.error"));
+            return;
         }
-        player.sendMessage(new TextComponentTranslation("carmanagement.store.error"));
+        player.sendMessage(new TextComponentTranslation("carmanagement.store.novehicles"));
     }
 
 }

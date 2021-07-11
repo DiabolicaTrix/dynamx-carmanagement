@@ -2,7 +2,8 @@ item.key.name=Clé de voiture
 tile.garage.name=Garage
 
 carmanagement.store.success=Votre %1 a bien été stocké dans votre garage.
-carmanagement.store.error=Aucun véhicule trouvé.
+carmanagement.store.error=Le véhicule ne peut pas être stocké.
+carmanagement.store.novehicles=Aucun véhicule trouvé.
 
 carmanagement.lock=Le véhicule a été verouillé.
 carmanagement.unlock=Le véhicule a été déverouillé.

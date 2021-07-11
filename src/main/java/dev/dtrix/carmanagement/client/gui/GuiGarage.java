@@ -89,6 +89,8 @@ public class GuiGarage extends BrokkGuiScreen {
         });
         listView.setElements(entities);
         listView.setOnClickEvent(event -> {
+            if(listView.getElements().size() == 0)
+                return;
             //selectElement(listView.getSelectedCellIndex()-2);
             this.selected = entities.get(listView.getSelectedCellIndex()-2);
             ModularVehicleInfo<?> info = DynamXObjectLoaders.WHEELED_VEHICLES.findInfo(this.selected.getName());
