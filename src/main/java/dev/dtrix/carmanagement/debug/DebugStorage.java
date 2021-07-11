@@ -2,7 +2,7 @@ package dev.dtrix.carmanagement.debug;
 
 import dev.dtrix.carmanagement.api.GarageManager;
 import dev.dtrix.carmanagement.api.IGarageStorage;
-import dev.dtrix.carmanagement.garage.StoredVehicle;
+import dev.dtrix.carmanagement.api.StoredVehicle;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.Mod;

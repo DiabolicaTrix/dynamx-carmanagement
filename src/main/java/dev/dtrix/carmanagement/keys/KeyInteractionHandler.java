@@ -47,7 +47,6 @@ public class KeyInteractionHandler {
      */
     @SubscribeEvent
     public static void onAttacked(PhysicsEntityEvent.AttackedEvent event) {
-        System.out.println(PermissionAPI.hasPermission(event.player, "carmanagement.destroy"));
         if(!event.player.world.isRemote && event.player.isSneaking() && PermissionAPI.hasPermission(event.player, "carmanagement.destroy")) {
             return;
         }

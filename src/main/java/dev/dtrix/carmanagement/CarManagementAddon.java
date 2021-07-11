@@ -18,8 +18,6 @@ public class CarManagementAddon {
     public static void init()
     {
         LOGGER.info("Initializing Car Management Addon.");
-
-        //SynchronizedVariablesRegistry.addSyncVar(new ResourceLocation(MODID, "key_uuid"), )
     }
 
     public static Logger getLogger() {

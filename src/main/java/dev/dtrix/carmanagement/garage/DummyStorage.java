@@ -1,6 +1,7 @@
 package dev.dtrix.carmanagement.garage;
 
 import dev.dtrix.carmanagement.api.IGarageStorage;
+import dev.dtrix.carmanagement.api.StoredVehicle;
 import net.minecraft.entity.player.EntityPlayer;
 
 import java.util.ArrayList;

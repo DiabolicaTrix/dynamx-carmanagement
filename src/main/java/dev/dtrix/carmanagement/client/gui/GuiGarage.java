@@ -1,18 +1,13 @@
 package dev.dtrix.carmanagement.client.gui;
 
-import com.jme3.math.Vector3f;
 import dev.dtrix.carmanagement.CarManagementAddon;
-import dev.dtrix.carmanagement.garage.StoredVehicle;
+import dev.dtrix.carmanagement.api.StoredVehicle;
 import dev.dtrix.carmanagement.mod.CarManagementMod;
 import dev.dtrix.carmanagement.mod.packets.PacketRetrieveVehicle;
-import fr.aym.acsguis.component.textarea.GuiTextArea;
 import fr.dynamx.common.contentpack.DynamXObjectLoaders;
 import fr.dynamx.common.contentpack.ModularVehicleInfo;
-import fr.dynamx.common.entities.vehicles.CarEntity;
 import fr.dynamx.utils.client.DynamXRenderUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderHelper;
 import net.voxelindustry.brokkgui.data.RectAlignment;
 import net.voxelindustry.brokkgui.data.RectBox;
 import net.voxelindustry.brokkgui.element.GuiLabel;

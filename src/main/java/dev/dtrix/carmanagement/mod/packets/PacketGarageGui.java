@@ -1,24 +1,17 @@
 package dev.dtrix.carmanagement.mod.packets;
 
 import dev.dtrix.carmanagement.client.gui.GuiGarage;
-import dev.dtrix.carmanagement.garage.StoredVehicle;
-import fr.aym.acsguis.cssengine.CssGuisManager;
+import dev.dtrix.carmanagement.api.StoredVehicle;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.minecraftforge.fml.server.FMLServerHandler;
 import net.voxelindustry.brokkgui.wrapper.impl.BrokkGuiManager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PacketGarageGui implements IMessage {
 

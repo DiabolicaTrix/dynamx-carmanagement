@@ -1,7 +1,5 @@
 package dev.dtrix.carmanagement.api;
 
-import dev.dtrix.carmanagement.garage.StoredVehicle;
-import fr.dynamx.common.entities.BaseVehicleEntity;
 import net.minecraft.entity.player.EntityPlayer;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package dev.dtrix.carmanagement.garage;
+package dev.dtrix.carmanagement.api;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;

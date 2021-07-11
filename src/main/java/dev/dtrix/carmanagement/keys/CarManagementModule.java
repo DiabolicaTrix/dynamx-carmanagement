@@ -1,12 +1,10 @@
 package dev.dtrix.carmanagement.keys;
 
-import dev.dtrix.carmanagement.garage.StoredVehicle;
+import dev.dtrix.carmanagement.api.StoredVehicle;
 import fr.dynamx.api.entities.modules.IPhysicsModule;
 import fr.dynamx.common.entities.BaseVehicleEntity;
 import fr.dynamx.common.physics.entities.AbstractEntityPhysicsHandler;
 import net.minecraft.nbt.NBTTagCompound;
-
-import java.util.UUID;
 
 public class CarManagementModule implements IPhysicsModule<AbstractEntityPhysicsHandler<?, ?>> {
 
