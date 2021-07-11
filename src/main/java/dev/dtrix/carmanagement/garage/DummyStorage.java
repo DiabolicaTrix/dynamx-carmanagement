@@ -16,6 +16,7 @@ public class DummyStorage implements IGarageStorage {
 
     @Override
     public List<StoredVehicle> list(EntityPlayer player) {
+
         return new ArrayList<>();
     }
 
