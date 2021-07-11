@@ -2,24 +2,15 @@ package dev.dtrix.carmanagement.debug.block;
 
 import dev.dtrix.carmanagement.CarManagementAddon;
 import dev.dtrix.carmanagement.garage.GarageHelper;
-import dev.dtrix.carmanagement.garage.GarageManager;
 import dev.dtrix.carmanagement.mod.CarManagementMod;
-import dev.dtrix.carmanagement.mod.packets.PacketGarageGui;
-import fr.dynamx.common.contentpack.DynamXObjectLoaders;
-import fr.dynamx.common.entities.vehicles.CarEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class BlockGarage extends Block {
 

@@ -1,9 +1,7 @@
 package dev.dtrix.carmanagement.garage;
 
-import fr.dynamx.common.entities.BaseVehicleEntity;
-import fr.dynamx.common.entities.vehicles.CarEntity;
+import dev.dtrix.carmanagement.api.IGarageStorage;
 import net.minecraft.entity.player.EntityPlayer;
-import scala.actors.threadpool.Arrays;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +12,7 @@ import java.util.List;
  * It is used as a default implementation when no other storage implementation has been registered.
  * @author DiabolicaTrix
  */
-public class DummyStorage implements IGarageStorage{
+public class DummyStorage implements IGarageStorage {
 
     @Override
     public List<StoredVehicle> list(EntityPlayer player) {

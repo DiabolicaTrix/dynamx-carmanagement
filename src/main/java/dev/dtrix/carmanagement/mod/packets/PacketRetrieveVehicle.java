@@ -1,7 +1,7 @@
 package dev.dtrix.carmanagement.mod.packets;
 
 import com.jme3.math.Vector3f;
-import dev.dtrix.carmanagement.garage.GarageManager;
+import dev.dtrix.carmanagement.api.GarageManager;
 import dev.dtrix.carmanagement.garage.StoredVehicle;
 import dev.dtrix.carmanagement.mod.item.Items;
 import fr.dynamx.addons.basics.common.KeyUtils;

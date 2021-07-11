@@ -17,7 +17,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'maven-publish'
 apply plugin: "com.jfrog.artifactory"
 
-version = '0.1.6'
+version = '0.1.7'
 group = 'dev.dtrix'
 archivesBaseName = 'carmanagement'
 
@@ -77,10 +77,22 @@ sourceSets {
     }
 }
 
+tasks.register("apiJar", Jar) {
+    from sourceSets.main.output
+    include '**/api/**'
+    classifier 'api'
+}
+
+artifacts {
+    archives jar
+    archives apiJar
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
             artifact jar
+            artifact apiJar
         }
     }
 }
@@ -101,3 +113,4 @@ artifactory {
         }
     }
 }
+

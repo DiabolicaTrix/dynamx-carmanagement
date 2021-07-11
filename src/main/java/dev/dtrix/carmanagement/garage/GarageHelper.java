@@ -1,5 +1,6 @@
 package dev.dtrix.carmanagement.garage;
 
+import dev.dtrix.carmanagement.api.GarageManager;
 import dev.dtrix.carmanagement.keys.CarManagementModule;
 import dev.dtrix.carmanagement.mod.CarManagementMod;
 import dev.dtrix.carmanagement.mod.item.ItemKey;
