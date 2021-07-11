@@ -31,5 +31,5 @@ public class DummyStorage implements IGarageStorage {
     }
 
     @Override
-    public boolean insert(EntityPlayer player, StoredVehicle vehicle) { return false; }
+    public int insert(EntityPlayer player, StoredVehicle vehicle) { return -1; }
 }

@@ -39,7 +39,7 @@ public class DebugStorage implements IGarageStorage {
     }
 
     @Override
-    public boolean insert(EntityPlayer player, StoredVehicle vehicle) {
-        return true;
+    public int insert(EntityPlayer player, StoredVehicle vehicle) {
+        return 0;
     }
 }

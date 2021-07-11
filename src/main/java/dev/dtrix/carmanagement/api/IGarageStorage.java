@@ -41,8 +41,8 @@ public interface IGarageStorage {
      * Used to insert a new vehicle in storage. This is typically used when buying a new vehicle.
      * @param player The owner of the vehicle.
      * @param vehicle The vehicle to be added.
-     * @return a state boolean. True if successful, false otherwise.
+     * @return the id of the inserted vehicle, -1 if an error occured.
      */
-    boolean insert(EntityPlayer player, StoredVehicle vehicle);
+    int insert(EntityPlayer player, StoredVehicle vehicle);
 
 }
