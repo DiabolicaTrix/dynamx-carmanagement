@@ -7,3 +7,5 @@ carmanagement.store.novehicles=Aucun véhicule trouvé.
 
 carmanagement.lock=Le véhicule a été verouillé.
 carmanagement.unlock=Le véhicule a été déverouillé.
+
+carmanagement.garage.novehicles=Aucun véhicule disponible.

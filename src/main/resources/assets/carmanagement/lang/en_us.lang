@@ -7,3 +7,5 @@ carmanagement.store.novehicles=No vehicles found.
 
 carmanagement.lock=The vehicle has been locked.
 carmanagement.unlock=The vehicle has been unlocked.
+
+carmanagement.garage.novehicles=No vehicles available.

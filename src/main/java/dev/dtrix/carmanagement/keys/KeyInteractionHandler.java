@@ -36,7 +36,7 @@ public class KeyInteractionHandler {
      */
     @SubscribeEvent
     public static void onPhysicsEntitySpawned(PhysicsEntityEvent.PhysicsEntitySpawnedEvent event) {
-        if(event.getEntity() instanceof BaseVehicleEntity && event.getEntity().getModuleByType(CarManagementModule.class).getStoredVehicle() == null) {
+        if(event.getEntity() instanceof BaseVehicleEntity && event.getEntity().getModuleByType(CarManagementModule.class) == null) {
             event.setCanceled(true);
         }
     }

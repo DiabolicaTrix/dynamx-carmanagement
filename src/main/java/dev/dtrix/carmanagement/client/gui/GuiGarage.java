@@ -7,7 +7,9 @@ import dev.dtrix.carmanagement.mod.packets.PacketRetrieveVehicle;
 import fr.dynamx.common.contentpack.DynamXObjectLoaders;
 import fr.dynamx.common.contentpack.ModularVehicleInfo;
 import fr.dynamx.utils.client.DynamXRenderUtils;
+import fr.ourten.teabeans.value.BaseProperty;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
 import net.voxelindustry.brokkgui.data.RectAlignment;
 import net.voxelindustry.brokkgui.data.RectBox;
 import net.voxelindustry.brokkgui.element.GuiLabel;
@@ -23,8 +25,7 @@ import java.util.List;
 
 public class GuiGarage extends BrokkGuiScreen {
 
-    private ModularVehicleInfo<?> selectedInfo;
-    private StoredVehicle selected;
+    private final BaseProperty<StoredVehicle> selected;
 
     private GuiLabel mass;
     private GuiLabel speed;
@@ -35,6 +36,9 @@ public class GuiGarage extends BrokkGuiScreen {
 
     public GuiGarage(List<StoredVehicle> entities) {
         super(0.5f, 0.5f, 300, 200);
+
+        this.selected = new BaseProperty<>(null, "selected");
+        this.selected.addListener(change -> updateInformationPanel(this.selected.getValue().getVehicleInfo()));
 
         this.addStylesheet("/assets/" + CarManagementAddon.MODID + "/css/garage.css");
 
@@ -82,25 +86,27 @@ public class GuiGarage extends BrokkGuiScreen {
             cell.setGraphic(container);
             return cell;
         });
-        listView.setElements(entities);
         listView.setOnClickEvent(event -> {
-            if(listView.getElements().size() == 0)
+            // Cell indexes below 2 seem to be used internally.
+            // Cell index 2 is actually the first elements in the provided list.
+            if(listView.getElements().size() == 0 || listView.getSelectedCellIndex() < 2)
                 return;
-            //selectElement(listView.getSelectedCellIndex()-2);
-            this.selected = entities.get(listView.getSelectedCellIndex()-2);
-            ModularVehicleInfo<?> info = DynamXObjectLoaders.WHEELED_VEHICLES.findInfo(this.selected.getName());
-            updateInformationPanel(info);
-            this.selectedInfo = info;
+
+            this.selected.setValue(entities.get(listView.getSelectedCellIndex() - 2));
         });
+        listView.setElements(entities);
+        listView.setPlaceholder(new GuiLabel(I18n.format("carmanagement.garage.novehicles")));
+        if(listView.getElements().size() == 0) {
+            listView.getPlaceholder().setVisible(true);
+        }
         body.addChild(listView, 5, 16);
 
         retrieveButton = new GuiButton("Retrieve");
         retrieveButton.addStyleClass("button");
         retrieveButton.setSize(145, 20);
         retrieveButton.setOnClickEvent(event -> {
-            if(this.selected != null) {
-                CarManagementMod.NETWORK.sendToServer(new PacketRetrieveVehicle(this.selected));
-            }
+            if(this.selected.getValue() != null)
+                CarManagementMod.NETWORK.sendToServer(new PacketRetrieveVehicle(this.selected.getValue()));
         });
         body.addChild(retrieveButton, 150, 200 - 25);
     }
@@ -108,7 +114,7 @@ public class GuiGarage extends BrokkGuiScreen {
     @Override
     public void renderLast(int mouseX, int mouseY) {
         super.renderLast(mouseX, mouseY);
-        if(this.selectedInfo != null) {
+        if(this.selected.getValue() != null) {
             GlStateManager.pushMatrix();
 
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -118,7 +124,7 @@ public class GuiGarage extends BrokkGuiScreen {
             GlStateManager.rotate(180, 0, 0, 1);
             GlStateManager.rotate(90, 0, 1, 0);
 
-            DynamXRenderUtils.renderCar(this.selectedInfo, (byte) this.selected.getMetadata());
+            DynamXRenderUtils.renderCar(this.selected.getValue().getVehicleInfo(), (byte) this.selected.getValue().getMetadata());
 
             GlStateManager.popMatrix();
         }
@@ -138,7 +144,7 @@ public class GuiGarage extends BrokkGuiScreen {
     public void updateInformationPanel(ModularVehicleInfo<?> info) {
         mass.setText("Mass: " + info.getEmptyMass());
         speed.setText("Max speed: " + info.getVehicleMaxSpeed());
-        variant.setText("Variant: " + info.getTextures().get((byte) this.selected.getMetadata()).getName());
+        variant.setText("Variant: " + info.getTextures().get((byte) this.selected.getValue().getMetadata()).getName());
     }
 
 }

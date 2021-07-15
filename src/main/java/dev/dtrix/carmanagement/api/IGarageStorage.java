@@ -11,7 +11,8 @@ import java.util.List;
 public interface IGarageStorage {
 
     /**
-     * Returns a list of the player's stored vehicles.
+     * Returns the list of available vehicles a player currently has in storage.
+     * A vehicle needs not to be present as an entity in the world in order to be considered available.
      * @param player owner of the vehicles to be fetched from storage.
      * @return a list containing the stored vehicles.
      */

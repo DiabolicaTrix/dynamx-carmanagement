@@ -1,5 +1,7 @@
 package dev.dtrix.carmanagement.api;
 
+import fr.dynamx.common.contentpack.DynamXObjectLoaders;
+import fr.dynamx.common.contentpack.ModularVehicleInfo;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
 
@@ -16,6 +18,13 @@ public class StoredVehicle implements INBTSerializable<NBTTagCompound> {
     private String name;
     private int metadata;
     private UUID owner;
+
+    /**
+     * This variable is used to store the vehicle information,
+     * it is stored to prevent a call to the registry every time the information are required.
+     * The value is lazy-loaded only if required.
+     */
+    private ModularVehicleInfo<?> vehicleInfo;
 
     public StoredVehicle() {}
 
@@ -56,6 +65,13 @@ public class StoredVehicle implements INBTSerializable<NBTTagCompound> {
 
     public void setOwner(UUID owner) {
         this.owner = owner;
+    }
+
+    public ModularVehicleInfo<?> getVehicleInfo() {
+        if(vehicleInfo == null) {
+            vehicleInfo = DynamXObjectLoaders.WHEELED_VEHICLES.findInfo(name);
+        }
+        return vehicleInfo;
     }
 
     @Override
