@@ -8,6 +8,7 @@ import fr.dynamx.addons.basics.common.KeyUtils;
 import fr.dynamx.common.entities.vehicles.CarEntity;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -45,7 +46,8 @@ public class PacketRetrieveVehicle implements IMessage {
         public IMessage onMessage(PacketRetrieveVehicle message, MessageContext ctx) {
             ctx.getServerHandler().player.getServerWorld().addScheduledTask(() -> {
                 if(GarageManager.getStorage().retrieve(ctx.getServerHandler().player, message.vehicle)) {
-                    CarEntity vehicle = new CarEntity(message.vehicle.getName(), ctx.getServerHandler().player.world, new Vector3f(((float) ctx.getServerHandler().player.posX), ((float) (ctx.getServerHandler().player.posY + 10)), ((float) ctx.getServerHandler().player.posZ)), 0, message.vehicle.getMetadata());
+                    BlockPos spawnPosition = GarageManager.getStorage().getSpawnPosition(ctx.getServerHandler().player);
+                    CarEntity vehicle = new CarEntity(message.vehicle.getName(), ctx.getServerHandler().player.world, new Vector3f(spawnPosition.getX(), spawnPosition.getY(), spawnPosition.getZ()), 0, message.vehicle.getMetadata());
                     ctx.getServerHandler().player.world.spawnEntity(vehicle);
 
                     ItemStack key = new ItemStack(Items.KEY);

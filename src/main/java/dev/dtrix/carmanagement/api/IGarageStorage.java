@@ -1,6 +1,7 @@
 package dev.dtrix.carmanagement.api;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.List;
 
@@ -43,5 +44,12 @@ public interface IGarageStorage {
      * @return the id of the inserted vehicle, -1 if an error occured.
      */
     int insert(EntityPlayer player, StoredVehicle vehicle);
+
+    /**
+     * Used to find a valid spawn position for a vehicle
+     * @param player the player spawning the vehicle.
+     * @return a position
+     */
+    BlockPos getSpawnPosition(EntityPlayer player);
 
 }

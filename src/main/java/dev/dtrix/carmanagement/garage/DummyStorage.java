@@ -3,6 +3,7 @@ package dev.dtrix.carmanagement.garage;
 import dev.dtrix.carmanagement.api.IGarageStorage;
 import dev.dtrix.carmanagement.api.StoredVehicle;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,6 @@ public class DummyStorage implements IGarageStorage {
 
     @Override
     public List<StoredVehicle> list(EntityPlayer player) {
-
         return new ArrayList<>();
     }
 
@@ -33,4 +33,9 @@ public class DummyStorage implements IGarageStorage {
 
     @Override
     public int insert(EntityPlayer player, StoredVehicle vehicle) { return -1; }
+
+    @Override
+    public BlockPos getSpawnPosition(EntityPlayer player) {
+        return player.getPosition().up(3);
+    }
 }
